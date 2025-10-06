@@ -3,255 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شرح استخدام البوت</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>دليل استخدام بوت نبضات الأمل</title>
     <style>
-        :root {
-            --tg-theme-bg-color: #ffffff;
-            --tg-theme-text-color: #000000;
-            --tg-theme-button-color: #2481cc;
-            --tg-theme-button-text-color: #ffffff;
-            --tg-theme-hint-color: #999999;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
             margin: 0;
             padding: 20px;
-            background-color: var(--tg-theme-bg-color);
-            color: var(--tg-theme-text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
         }
-
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        #password-gate, #content {
-            padding: 25px;
+            max-width: 800px;
+            margin: auto;
+            background-color: #ffffff;
             border-radius: 12px;
-            background-color: rgba(128, 128, 128, 0.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            animation: fadeInDown 0.5s ease-out;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-
-        h1, h2 {
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
             text-align: center;
-            color: var(--tg-theme-button-color);
         }
-        
-        h2 {
-            border-bottom: 2px solid var(--tg-theme-button-color);
-            padding-bottom: 10px;
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        main {
+            padding: 25px;
+        }
+        .section {
             margin-bottom: 20px;
         }
-
-        input[type="password"] {
-            width: calc(100% - 24px);
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        input[type="password"]:focus {
-            border-color: var(--tg-theme-button-color);
-            box-shadow: 0 0 8px rgba(36, 129, 204, 0.4);
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background-color: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-            font-size: 16px;
-            font-weight: bold;
+        .section-title {
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        button:active {
-            transform: translateY(0) scale(0.98);
-            box-shadow: none;
-        }
-
-        #error-message {
-            color: #ff3b30;
-            text-align: center;
-            margin-top: 10px;
-            font-weight: bold;
-            display: none;
-        }
-
-        #content {
-            display: none;
-        }
-
-        .step {
-            margin-bottom: 25px;
             padding: 15px;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
         }
-        
-        .step:hover {
-            background-color: rgba(128, 128, 128, 0.08);
-            transform: scale(1.02);
+        .section-title:hover {
+            background-color: #dee2e6;
         }
-
-        .step h3 {
-            margin-bottom: 5px;
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            padding: 0 15px;
+            border-right: 3px solid #007bff;
+            margin-right: 10px;
         }
-
-        .step p {
-            line-height: 1.7;
-            margin-top: 0;
-            color: var(--tg-theme-hint-color);
+        .section-title.active + .section-content {
+            max-height: 500px; /* Adjust as needed */
+            padding: 15px;
         }
-
+        .arrow {
+            transition: transform 0.3s;
+        }
+        .section-title.active .arrow {
+            transform: rotate(90deg);
+        }
+        p, li {
+            color: #495057;
+        }
+        ul {
+            padding-right: 20px;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #e83e8c;
+        }
         footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(128, 128, 128, 0.2);
-            color: var(--tg-theme-hint-color);
+            padding: 15px;
+            background-color: #f8f9fa;
             font-size: 14px;
-            animation: fadeInDown 0.5s ease-out 0.5s;
-            animation-fill-mode: backwards;
+            color: #6c757d;
         }
-
-        footer p {
-            margin: 8px 0;
-        }
-
-        footer a {
-            color: var(--tg-theme-button-color);
-            text-decoration: none;
-            font-weight: bold;
-            transition: opacity 0.3s ease;
-        }
-        
-        footer a:hover {
-            opacity: 0.8;
-        }
-
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div id="password-gate">
-            <h1>🔒 الوصول محمي</h1>
-            <p style="text-align: center;">الرجاء إدخال كلمة المرور لعرض شرح استخدام البوت.</p>
-            <input type="password" id="password-input" placeholder="كلمة المرور">
-            <button onclick="checkPassword()">دخـول</button>
-            <p id="error-message">كلمة المرور غير صحيحة!</p>
-        </div>
-
-        <div id="content">
+        <header>
             <h1>دليل استخدام بوت نبضات الأمل 💙</h1>
-
-            <div class="step">
-                <h2>1. تسجيل عضو جديد</h2>
-                <p>
-                    عند تشغيل البوت لأول مرة، يجب عليك التسجيل كعضو. اضغط على زر "✍️ تسجيل عضو جديد" واتبع الخطوات. سيطلب منك البوت معلومات أساسية لإضافتك إلى قاعدة بيانات الفريق.
-                </p>
+        </header>
+        <main>
+            <div class="section">
+                <div class="section-title">
+                    <span>📋 كيفية تقديم حالة جديدة</span>
+                    <span class="arrow">▶️</span>
+                </div>
+                <div class="section-content">
+                    <p>لتقديم حالة إنسانية أو طلب قرطاسية، اتبع الخطوات التالية:</p>
+                    <ol>
+                        <li>اضغط على زر <code>📋 تقديم الحالة</code> في القائمة الرئيسية.</li>
+                        <li>سيظهر لك خياران: <strong>إنسانية</strong> أو <strong>قرطاسية</strong>. اختر النوع المناسب.</li>
+                        <li>سيقوم البوت بطرح سلسلة من الأسئلة عليك (مثل الاسم، الموقع، التفاصيل).</li>
+                        <li>أجب على كل سؤال بدقة.</li>
+                        <li>في النهاية، سيتم تسجيل الحالة وإرسالها إلى القنوات المختصة.</li>
+                    </ol>
+                </div>
             </div>
 
-            <div class="step">
-                <h2>2. تقديم حالة إنسانية</h2>
-                <p>
-                    بعد التسجيل، سيظهر لك زر "📋 تقديم حالة إنسانية". استخدم هذا الخيار لتقديم الحالات العامة (طبية، مالية، وغيرها). املأ جميع الحقول المطلوبة بدقة.
-                </p>
-            </div>
-            
-            <div class="step">
-                <h2>3. تقديم حالة قرطاسية</h2>
-                <p>
-                    هذا الخيار مخصص لتقديم الحالات التي تحتاج إلى قرطاسية ومستلزمات مدرسية. اضغط على "🖋 تقديم حالة - قرطاسية" وأدخل تفاصيل الحالة. سيتم إرسالها إلى القناة المخصصة.
-                </p>
+            <div class="section">
+                <div class="section-title">
+                    <span>📖 كيفية الوصول لتوثيقات المجازر</span>
+                    <span class="arrow">▶️</span>
+                </div>
+                <div class="section-content">
+                    <p>هذه الميزة تسمح بالوصول الآمن إلى ملفات التوثيق المحفوظة في قناة خاصة.</p>
+                    <ol>
+                        <li>اضغط على زر <code>📖 توثيق مجازر - مساعدة</code>.</li>
+                        <li>سيطلب منك البوت إدخال "رقم التوثيق" الذي تريد الاطلاع عليه.</li>
+                        <li>أدخل الرقم (مثلاً: <code>1</code> للتوثيق الأول، <code>7</code> للسابع، وهكذا).</li>
+                        <li>سيقوم البوت بتحويل الرسالة المطلوبة من القناة الخاصة مباشرة إليك.</li>
+                        <li><strong>ملاحظة هامة:</strong> لا يمكن نسخ، حفظ، أو إعادة توجيه هذه الرسائل لحماية المحتوى.</li>
+                    </ol>
+                </div>
             </div>
 
-            <div class="step">
-                <h2>4. معلوماتي</h2>
-                <p>
-                    لعرض بياناتك التي قمت بتسجيلها في البوت، اضغط على زر "ℹ️ معلوماتي".
-                </p>
+            <div class="section">
+                <div class="section-title">
+                    <span>💰 إدارة التبرعات المالية (خاص بالمؤسسين)</span>
+                    <span class="arrow">▶️</span>
+                </div>
+                <div class="section-content">
+                    <p>هذا الزر متاح للمؤسسين فقط ويستخدم لمتابعة وإدارة الأرصدة المالية.</p>
+                    <ol>
+                        <li>اضغط على زر <code>💰 التبرعات المالية</code>.</li>
+                        <li>اختر نوع التبرعات التي تريد عرضها: <strong>داخلية</strong> أو <strong>خارجية</strong>.</li>
+                        <li>سيعرض البوت تقريراً بالرصيد المالي الحالي والمواد العينية المتوفرة.</li>
+                        <li>لسحب مبلغ، اضغط على زر <code>سحب مبلغ مالي 🏧</code>.</li>
+                        <li>سيطلب البوت منك إدخال المبلغ المراد سحبه، ثم سبب السحب للتوثيق.</li>
+                        <li>بعد تأكيد العملية، سيتم خصم المبلغ من الرصيد وتوثيق العملية في سجل خاص.</li>
+                    </ol>
+                </div>
             </div>
-        </div>
+        </main>
+        <footer>
+            فريق نبضات أمل - 2025
+        </footer>
     </div>
-    
-    <footer>
-        <p>تم التطوير بواسطة <strong>Ammar Nedal Satouf</strong>، أحد مؤسسي الفريق.</p>
-        <p>للتواصل: <a href="https://t.me/ammarouis" target="_blank">@ammarouis</a></p>
-        <p>جميع الحقوق محفوظة لفريق نبضات أمل التطوعي © 2025</p>
-    </footer>
 
     <script>
-        // كلمة المرور (يجب أن تكون مطابقة للموجودة في كود البايثون)
-        const CORRECT_PASSWORD = 'HOPE';
-        const passwordInput = document.getElementById('password-input');
-        
-        function checkPassword() {
-            const passwordGate = document.getElementById('password-gate');
-            const content = document.getElementById('content');
-            const errorMessage = document.getElementById('error-message');
-
-            if (passwordInput.value === CORRECT_PASSWORD) {
-                passwordGate.style.display = 'none';
-                content.style.display = 'block';
-            } else {
-                errorMessage.style.display = 'block';
-                // إضافة اهتزاز عند الخطأ
-                passwordGate.classList.add('shake');
-                setTimeout(() => passwordGate.classList.remove('shake'), 500);
-            }
-        }
-
-        // تفعيل الدخول عبر الضغط على زر Enter
-        passwordInput.addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                checkPassword();
-            }
-        });
-        
-        // لجعل الواجهة متجاوبة مع ثيم التلغرام
-        document.addEventListener('DOMContentLoaded', (event) => {
-            try {
-                Telegram.WebApp.ready();
-                const theme = Telegram.WebApp.themeParams;
-                document.body.style.setProperty('--tg-theme-bg-color', theme.bg_color || '#ffffff');
-                document.body.style.setProperty('--tg-theme-text-color', theme.text_color || '#000000');
-                document.body.style.setProperty('--tg-theme-button-color', theme.button_color || '#2481cc');
-                document.body.style.setProperty('--tg-theme-button-text-color', theme.button_text_color || '#ffffff');
-                document.body.style.setProperty('--tg-theme-hint-color', theme.hint_color || '#999999');
-            } catch (e) {
-                console.error("Telegram WebApp script not found or failed to load.", e);
-            }
+        document.querySelectorAll('.section-title').forEach(title => {
+            title.addEventListener('click', () => {
+                // Close other sections
+                document.querySelectorAll('.section-title').forEach(otherTitle => {
+                    if (otherTitle !== title) {
+                        otherTitle.classList.remove('active');
+                    }
+                });
+                // Toggle current section
+                title.classList.toggle('active');
+            });
         });
     </script>
 
