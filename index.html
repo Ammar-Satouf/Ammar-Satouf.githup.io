@@ -3,94 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITGenix Academy - أكاديمية البرمجة</title>
+    <title>ITGenix Academy - Mini App</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            font-family: 'Tajawal', sans-serif;
+        :root {
+            --cyan: #22d3ee;
+            --purple: #9333ea;
+            --dark-bg: #030511;
         }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0f0f2f 100%);
+            background: var(--dark-bg);
             min-height: 100vh;
             overflow-x: hidden;
+            font-family: 'Cairo', sans-serif;
         }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, #00d9ff, #7c3aed, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .glow-box {
-            box-shadow: 0 0 60px rgba(124, 58, 237, 0.3), 
-                        0 0 100px rgba(0, 217, 255, 0.1),
-                        inset 0 0 60px rgba(124, 58, 237, 0.05);
-        }
-        
-        .telegram-btn {
-            background: linear-gradient(135deg, #0088cc, #00aaff);
-            box-shadow: 0 10px 40px rgba(0, 136, 204, 0.4);
-            transition: all 0.3s ease;
-        }
-        
-        .telegram-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 60px rgba(0, 136, 204, 0.6);
-        }
-        
-        .support-btn {
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
-            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4);
-            transition: all 0.3s ease;
-        }
-        
-        .support-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.6);
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(124, 58, 237, 0.5);
-            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.2);
-        }
-        
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        
-        .floating {
-            animation: floating 6s ease-in-out infinite;
-        }
-        
-        @keyframes floating {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        
-        .pulse-ring {
-            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
-        }
-        
-        @keyframes pulse-ring {
-            0% { transform: scale(0.8); opacity: 1; }
-            100% { transform: scale(2); opacity: 0; }
-        }
-        
+
+        /* Code Rain Effect */
         .code-rain {
             position: fixed;
             top: 0;
@@ -98,531 +34,621 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: 1;
+            opacity: 0.15;
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(34, 211, 238, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
             z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        /* Haze Effect */
+        .haze {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, var(--dark-bg) 70%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Logo Container */
+        .logo-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(5deg); }
+        }
+
+        /* Pulse Rings */
+        .pulse-ring {
+            position: absolute;
+            border: 2px solid;
+            border-radius: 50%;
+            animation: pulse 3s ease-out infinite;
+        }
+
+        .pulse-ring:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            border-color: var(--cyan);
+            animation-delay: 0s;
+        }
+
+        .pulse-ring:nth-child(2) {
+            width: 120%;
+            height: 120%;
+            border-color: var(--purple);
+            animation-delay: 0.5s;
+        }
+
+        .pulse-ring:nth-child(3) {
+            width: 140%;
+            height: 140%;
+            border-color: var(--cyan);
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* Logo Frame */
+        .logo-frame {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(147, 51, 234, 0.1));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 0 60px rgba(34, 211, 238, 0.3),
+                0 0 100px rgba(147, 51, 234, 0.2),
+                inset 0 0 60px rgba(34, 211, 238, 0.1);
+            border: 2px solid transparent;
+            background-clip: padding-box;
             overflow: hidden;
         }
-        
-        .code-char {
+
+        .logo-frame::before {
+            content: '';
             position: absolute;
-            color: rgba(0, 217, 255, 0.15);
-            font-family: monospace;
-            font-size: 14px;
-            animation: fall linear infinite;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--cyan), var(--purple), var(--cyan), var(--purple));
+            border-radius: 32px;
+            z-index: -1;
+            animation: borderRotate 4s linear infinite;
         }
-        
-        @keyframes fall {
-            0% { transform: translateY(-100%); opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
+
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
-        
-        .hero-shape {
+
+        /* Logo Text */
+        .logo-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
+            position: relative;
+            animation: glitch 3s infinite;
+        }
+
+        .logo-text::before,
+        .logo-text::after {
+            content: 'ITGenix';
             position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text::before {
+            animation: glitchTop 1s linear infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        }
+
+        .logo-text::after {
+            animation: glitchBottom 1.5s linear infinite;
+            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitchTop {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-5px, -2px); }
+            94% { transform: translate(5px, 2px); }
+        }
+
+        @keyframes glitchBottom {
+            0%, 90%, 100% { transform: translate(0); }
+            93% { transform: translate(5px, 1px); }
+            95% { transform: translate(-5px, -1px); }
+        }
+
+        /* Holographic Overlay */
+        .holographic {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(34, 211, 238, 0.1) 45%,
+                rgba(147, 51, 234, 0.1) 50%,
+                transparent 55%
+            );
+            background-size: 200% 200%;
+            animation: holographicShine 3s ease-in-out infinite;
+            border-radius: 30px;
+            pointer-events: none;
+        }
+
+        @keyframes holographicShine {
+            0% { background-position: 200% 200%; }
+            100% { background-position: -200% -200%; }
+        }
+
+        /* Telegram Icon */
+        .telegram-icon {
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0088cc, #00a8e8);
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(0, 136, 204, 0.6);
+            animation: telegramPulse 2s ease-in-out infinite;
         }
-        
-        .exclusive-badge {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            animation: badge-pulse 2s ease-in-out infinite;
+
+        @keyframes telegramPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(0, 136, 204, 0.6); }
+            50% { transform: scale(1.1); box-shadow: 0 0 50px rgba(0, 136, 204, 0.8); }
         }
-        
-        @keyframes badge-pulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.8); }
+
+        /* Academy Badge */
+        .academy-badge {
+            margin-top: 30px;
+            padding: 10px 30px;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(147, 51, 234, 0.2));
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            border-radius: 50px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            color: var(--cyan);
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px var(--cyan);
+            animation: badgeGlow 2s ease-in-out infinite alternate;
         }
-        
-        .typing-cursor {
-            animation: blink 1s step-end infinite;
+
+        @keyframes badgeGlow {
+            0% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(147, 51, 234, 0.5); }
         }
-        
-        @keyframes blink {
-            50% { opacity: 0; }
+
+        /* Exclusive Tag */
+        .exclusive-tag {
+            margin-top: 20px;
+            padding: 8px 25px;
+            background: linear-gradient(90deg, var(--purple), var(--cyan));
+            border-radius: 5px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 2px;
+            animation: exclusiveFlash 1.5s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
         }
-        
-        ::-webkit-scrollbar {
-            width: 8px;
+
+        .exclusive-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shine 2s infinite;
         }
-        
-        ::-webkit-scrollbar-track {
-            background: #1a1a3a;
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #7c3aed, #00d9ff);
-            border-radius: 4px;
+
+        @keyframes exclusiveFlash {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        /* Code Text Handles */
+        .code-handles {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .handle {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            opacity: 0.8;
+            text-shadow: 0 0 10px var(--cyan);
+            animation: typewriter 3s steps(30) infinite;
+            position: relative;
+        }
+
+        .handle::before {
+            content: '> ';
+            color: var(--purple);
+        }
+
+        .handle:nth-child(1) { animation-delay: 0s; }
+        .handle:nth-child(2) { animation-delay: 0.5s; }
+        .handle:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes typewriter {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Coming Soon Arabic */
+        .coming-soon-ar {
+            margin-top: 30px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--cyan), var(--purple), var(--cyan));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientText 3s linear infinite;
+            text-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 5;
+            animation: particleFloat 10s linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* VFX Overlay Lines */
+        .vfx-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(34, 211, 238, 0.02) 2px,
+                rgba(34, 211, 238, 0.02) 4px
+            );
+        }
+
+        /* Orbiting Elements */
+        .orbit {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 1px dashed rgba(34, 211, 238, 0.2);
+            border-radius: 50%;
+            animation: orbitRotate 20s linear infinite;
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--purple);
+            border-radius: 50%;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px var(--purple);
+        }
+
+        @keyframes orbitRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Circuit Lines */
+        .circuit-line {
+            position: fixed;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0.3;
+            animation: circuitFlow 4s linear infinite;
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
         }
     </style>
 </head>
-<body class="text-white">
-    <!-- Code Rain Background -->
-    <div class="code-rain" id="codeRain"></div>
-    
-    <!-- Hero Shapes -->
-    <div class="hero-shape w-96 h-96 bg-purple-600 top-0 right-0"></div>
-    <div class="hero-shape w-80 h-80 bg-cyan-500 bottom-0 left-0"></div>
-    <div class="hero-shape w-64 h-64 bg-pink-500 top-1/2 left-1/2"></div>
-    
-    <!-- Particles Container -->
-    <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
-    
-    <!-- Main Content -->
-    <div class="relative z-10">
-        <!-- Navigation -->
-        <nav class="fixed top-0 w-full py-4 px-6 backdrop-blur-xl bg-black/20 border-b border-white/10 z-50" id="navbar">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden" style="background-color: #030511;">
-                        <img src="logo.png" alt="ITGenix" class="w-full h-full object-contain">
-                    </div>
-                    <span class="text-xl font-bold gradient-text">ITGenix Academy</span>
-                </div>
-                <a href="https://t.me/ITGenixAcademy" target="_blank" class="telegram-btn px-6 py-2 rounded-full text-white font-bold flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.828.94z"/></svg>
-                    انضم الآن
-                </a>
+<body>
+    <!-- Background Effects -->
+    <div class="grid-bg"></div>
+    <canvas class="code-rain" id="codeRain"></canvas>
+    <div class="haze"></div>
+    <div class="vfx-lines"></div>
+
+    <!-- Circuit Lines -->
+    <div class="circuit-line" style="top: 20%; width: 200px;"></div>
+    <div class="circuit-line" style="top: 40%; width: 150px; animation-delay: 1s;"></div>
+    <div class="circuit-line" style="top: 60%; width: 180px; animation-delay: 2s;"></div>
+    <div class="circuit-line" style="top: 80%; width: 220px; animation-delay: 3s;"></div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Logo Container -->
+        <div class="logo-container">
+            <!-- Pulse Rings -->
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            
+            <!-- Orbit -->
+            <div class="orbit">
+                <div class="orbit-dot"></div>
             </div>
-        </nav>
-        
-        <!-- Hero Section -->
-        <section class="min-h-screen flex items-center justify-center pt-20 px-6">
-            <div class="max-w-6xl mx-auto text-center">
-                <div class="mb-8 inline-block">
-                    <span class="exclusive-badge px-4 py-2 rounded-full text-sm font-bold">🚀 محتوى حصري قريباً</span>
-                </div>
+
+            <!-- Logo Frame -->
+            <div class="logo-frame">
+                <div class="holographic"></div>
+                <div class="logo-text">ITGenix</div>
                 
-                <div id="heroLogo" class="w-32 h-32 mx-auto mb-8 rounded-3xl flex items-center justify-center text-5xl font-black shadow-2xl floating overflow-hidden relative" style="background-color: #030511;">
-                    <div class="absolute inset-0 rounded-3xl pulse-ring bg-gradient-to-br from-cyan-400 to-purple-600"></div>
-                    <img src="logo.png" alt="ITGenix Academy" class="relative z-10 w-full h-full object-contain p-2">
-                </div>
-                
-                <h1 id="heroTitle" class="text-5xl md:text-7xl font-black mb-6">
-                    <span class="gradient-text">ITGenix Academy</span>
-                </h1>
-                
-                <p id="heroSubtitle" class="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto leading-relaxed">
-                    بوت تلغرام ذكي لمساعدة الطلاب في رحلتهم البرمجية
-                </p>
-                
-                <div id="typingText" class="text-lg text-cyan-400 mb-12 h-8">
-                    <span id="typed"></span><span class="typing-cursor">|</span>
-                </div>
-                
-                <div id="heroCTA" class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="https://t.me/ITGenixAcademy" target="_blank" class="telegram-btn px-10 py-4 rounded-2xl text-white font-bold text-lg flex items-center gap-3 group">
-                        <svg class="w-7 h-7 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.828.94z"/></svg>
-                        انضم لقناة التلغرام
-                    </a>
-                    <a href="https://t.me/ITGenix_Academy_Support" target="_blank" class="support-btn px-10 py-4 rounded-2xl text-white font-bold text-lg flex items-center gap-3 group">
-                        <svg class="w-7 h-7 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-                        تواصل مع الدعم
-                    </a>
-                </div>
-                
-                <!-- Scroll Indicator -->
-                <div class="mt-20 animate-bounce">
-                    <svg class="w-8 h-8 mx-auto text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                <!-- Telegram Icon -->
+                <div class="telegram-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                     </svg>
                 </div>
             </div>
-        </section>
-        
-        <!-- Features Section -->
-        <section class="py-20 px-6" id="features">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl md:text-5xl font-black text-center mb-4 gradient-text">ماذا نقدم لك؟</h2>
-                <p class="text-gray-400 text-center mb-16 text-lg">أدوات ومصادر متكاملة لتطوير مهاراتك البرمجية</p>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Card 1 -->
-                    <div class="card rounded-3xl p-8 feature-card">
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">تعلم البرمجة</h3>
-                        <p class="text-gray-400 leading-relaxed">دروس ومصادر شاملة في لغات البرمجة المختلفة مع شرح مبسط وعملي</p>
-                    </div>
-                    
-                    <!-- Card 2 -->
-                    <div class="card rounded-3xl p-8 feature-card">
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-600 flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">نصائح احترافية</h3>
-                        <p class="text-gray-400 leading-relaxed">إرشادات من خبراء في المجال لتسريع مسيرتك التعليمية</p>
-                    </div>
-                    
-                    <!-- Card 3 -->
-                    <div class="card rounded-3xl p-8 feature-card">
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">مشاريع عملية</h3>
-                        <p class="text-gray-400 leading-relaxed">تطبيق ما تتعلمه من خلال مشاريع حقيقية تضيفها لسيرتك الذاتية</p>
-                    </div>
-                    
-                    <!-- Card 4 -->
-                    <div class="card rounded-3xl p-8 feature-card">
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">مجتمع داعم</h3>
-                        <p class="text-gray-400 leading-relaxed">انضم لمجتمع من المبرمجين للتعلم والتطور معاً</p>
-                    </div>
-                    
-                    <!-- Card 5 -->
-                    <div class="card rounded-3xl p-8 feature-card">
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-400 to-rose-600 flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">دعم مباشر</h3>
-                        <p class="text-gray-400 leading-relaxed">احصل على إجابات لأسئلتك ومساعدة في حل المشاكل البرمجية</p>
-                    </div>
-                    
-                    <!-- Card 6 - Exclusive -->
-                    <div class="card rounded-3xl p-8 feature-card border-2 border-amber-500/50 relative overflow-hidden">
-                        <div class="absolute top-4 left-4">
-                            <span class="exclusive-badge px-3 py-1 rounded-full text-xs font-bold">قريباً</span>
-                        </div>
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-red-600 flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">محتوى حصري</h3>
-                        <p class="text-gray-400 leading-relaxed">محتوى متقدم ودورات حصرية للمشتركين المميزين</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Exclusive Content Section -->
-        <section class="py-20 px-6 relative overflow-hidden" id="exclusive">
-            <div class="absolute inset-0 bg-gradient-to-b from-purple-900/20 to-transparent"></div>
-            <div class="max-w-4xl mx-auto relative">
-                <div class="glow-box rounded-3xl p-10 md:p-16 bg-gradient-to-br from-purple-900/40 to-pink-900/40 backdrop-blur-xl border border-purple-500/30 text-center">
-                    <div class="w-24 h-24 mx-auto mb-8 rounded-full bg-gradient-to-br from-amber-400 to-red-600 flex items-center justify-center">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                    </div>
-                    
-                    <h2 class="text-3xl md:text-5xl font-black mb-6">
-                        <span class="gradient-text">المحتوى الحصري قادم!</span>
-                    </h2>
-                    
-                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
-                        نعمل على تجهيز محتوى تعليمي متقدم وحصري للمشتركين.
-                        <br>تواصل مع الدعم للحجز المبكر والحصول على خصومات خاصة!
-                    </p>
-                    
-                    <a href="https://t.me/ITGenix_Academy_Support" target="_blank" class="inline-flex items-center gap-3 support-btn px-10 py-5 rounded-2xl text-white font-bold text-xl">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-                        تواصل مع المشرف للاشتراك
-                    </a>
-                    
-                    <p class="mt-6 text-gray-400">
-                        @ITGenix_Academy_Support
-                    </p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Stats Section -->
-        <section class="py-20 px-6">
-            <div class="max-w-6xl mx-auto">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div class="text-center stat-item">
-                        <div class="text-4xl md:text-5xl font-black gradient-text mb-2" data-count="500">0+</div>
-                        <div class="text-gray-400">طالب</div>
-                    </div>
-                    <div class="text-center stat-item">
-                        <div class="text-4xl md:text-5xl font-black gradient-text mb-2" data-count="50">0+</div>
-                        <div class="text-gray-400">درس</div>
-                    </div>
-                    <div class="text-center stat-item">
-                        <div class="text-4xl md:text-5xl font-black gradient-text mb-2" data-count="10">0+</div>
-                        <div class="text-gray-400">لغة برمجة</div>
-                    </div>
-                    <div class="text-center stat-item">
-                        <div class="text-4xl md:text-5xl font-black gradient-text mb-2" data-count="24">0/7</div>
-                        <div class="text-gray-400">دعم متواصل</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- CTA Section -->
-        <section class="py-20 px-6">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl md:text-5xl font-black mb-8">
-                    جاهز تبدأ رحلتك البرمجية؟
-                </h2>
-                <p class="text-xl text-gray-400 mb-10">
-                    انضم الآن لقناة التلغرام واحصل على محتوى مجاني قيّم
-                </p>
-                
-                <a href="https://t.me/ITGenixAcademy" target="_blank" class="inline-block group">
-                    <div class="telegram-btn px-12 py-6 rounded-3xl flex items-center gap-4">
-                        <svg class="w-10 h-10 group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.828.94z"/></svg>
-                        <div class="text-right">
-                            <div class="text-2xl font-bold">انضم لقناة التلغرام</div>
-                            <div class="text-sm opacity-80">@ITGenixAcademy</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </section>
-        
-        <!-- Footer -->
-        <footer class="py-10 px-6 border-t border-white/10">
-            <div class="max-w-6xl mx-auto text-center">
-                <div class="flex items-center justify-center gap-3 mb-6">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden" style="background-color: #030511;">
-                        <img src="logo.png" alt="ITGenix" class="w-full h-full object-contain">
-                    </div>
-                    <span class="text-xl font-bold">ITGenix Academy</span>
-                </div>
-                
-                <div class="flex justify-center gap-6 mb-8">
-                    <a href="https://t.me/ITGenixAcademy" target="_blank" class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors" title="قناة التلغرام">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.828.94z"/></svg>
-                    </a>
-                    <a href="https://t.me/ITGenix_Academy_Support" target="_blank" class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors" title="الدعم الفني">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=61580447866713&mibextid=ZbWKwL" target="_blank" class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors" title="صفحة الفيسبوك">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </a>
-                </div>
-                
-                <div class="text-gray-400 mb-4 flex items-center justify-center gap-2">
-                    <span class="text-purple-400">تواصل مع المطور:</span> 
-                    <a href="https://t.me/ammarouis" target="_blank" class="text-cyan-400 hover:text-cyan-300 transition-colors font-bold">عمار نضال سطوف</a>
-                    <span class="text-gray-500">@ammarouis</span>
-                </div>
-                
-                <p class="text-gray-500 text-sm">
-                    © 2025 ITGenix Academy. جميع الحقوق محفوظة.
-                </p>
-            </div>
-        </footer>
+        </div>
+
+        <!-- Academy Badge -->
+        <div class="academy-badge">ACADEMY</div>
+
+        <!-- Exclusive Tag -->
+        <div class="exclusive-tag">✨ EXCLUSIVE ✨</div>
+
+        <!-- Coming Soon Arabic -->
+        <div class="coming-soon-ar">🚀 قريباً 🚀</div>
+
+        <!-- Code Handles -->
+        <div class="code-handles">
+            <div class="handle">@ITGenixAcademy</div>
+            <div class="handle">@ITGenix_Academy_Support</div>
+            <div class="handle">@ammarouis</div>
+        </div>
     </div>
-    
+
+    <!-- Floating Particles -->
+    <div id="particles"></div>
+
     <script>
-        // GSAP Animations
-        gsap.registerPlugin(ScrollTrigger);
-        
-        // Initial Load Animations
-        const tl = gsap.timeline();
-        
-        tl.from("#heroLogo", {
-            duration: 1.5,
-            scale: 0,
-            rotation: 360,
-            ease: "elastic.out(1, 0.5)"
-        })
-        .from("#heroTitle", {
-            duration: 1,
-            y: 50,
-            opacity: 0,
-            ease: "power3.out"
-        }, "-=0.8")
-        .from("#heroSubtitle", {
-            duration: 1,
-            y: 30,
-            opacity: 0,
-            ease: "power3.out"
-        }, "-=0.6")
-        .from("#heroCTA", {
-            duration: 1,
-            y: 30,
-            opacity: 0,
-            ease: "power3.out"
-        }, "-=0.4");
-        
-        // Typing Effect
-        const phrases = [
-            "تعلم Python و JavaScript و أكثر...",
-            "مشاريع عملية حقيقية",
-            "دعم مباشر على مدار الساعة",
-            "محتوى حصري قريباً!"
-        ];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typedElement = document.getElementById('typed');
-        
-        function typeEffect() {
-            const currentPhrase = phrases[phraseIndex];
-            
-            if (isDeleting) {
-                typedElement.textContent = currentPhrase.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typedElement.textContent = currentPhrase.substring(0, charIndex + 1);
-                charIndex++;
-            }
-            
-            let typeSpeed = isDeleting ? 50 : 100;
-            
-            if (!isDeleting && charIndex === currentPhrase.length) {
-                typeSpeed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                typeSpeed = 500;
-            }
-            
-            setTimeout(typeEffect, typeSpeed);
+        // Code Rain Effect
+        const canvas = document.getElementById('codeRain');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン<>{}[]();:=+-*/&|!@#$%^';
+        const charArray = chars.split('');
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * canvas.height / fontSize;
         }
-        
-        setTimeout(typeEffect, 1500);
-        
-        // Feature Cards Animation
-        gsap.utils.toArray('.feature-card').forEach((card, i) => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
-                },
-                duration: 0.8,
-                y: 60,
-                opacity: 0,
-                delay: i * 0.1,
-                ease: "power3.out"
-            });
-        });
-        
-        // Stats Counter Animation
-        gsap.utils.toArray('.stat-item').forEach((stat) => {
-            const countEl = stat.querySelector('[data-count]');
-            const target = parseInt(countEl.dataset.count);
-            
-            gsap.from(stat, {
-                scrollTrigger: {
-                    trigger: stat,
-                    start: "top 85%"
-                },
-                duration: 0.8,
-                y: 40,
-                opacity: 0
-            });
-            
-            ScrollTrigger.create({
-                trigger: stat,
-                start: "top 85%",
-                onEnter: () => {
-                    gsap.to(countEl, {
-                        duration: 2,
-                        innerHTML: target + (countEl.innerHTML.includes('/') ? '/7' : '+'),
-                        snap: { innerHTML: 1 },
-                        ease: "power2.out"
-                    });
+
+        function drawCodeRain() {
+            ctx.fillStyle = 'rgba(3, 5, 17, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#22d3ee';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const char = charArray[Math.floor(Math.random() * charArray.length)];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                // Gradient effect for each column
+                const gradient = ctx.createLinearGradient(x, y - 100, x, y);
+                gradient.addColorStop(0, 'transparent');
+                gradient.addColorStop(0.5, '#9333ea');
+                gradient.addColorStop(1, '#22d3ee');
+                ctx.fillStyle = gradient;
+
+                ctx.fillText(char, x, y);
+
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
                 }
-            });
-        });
-        
-        // Exclusive Section Animation
-        gsap.from("#exclusive .glow-box", {
-            scrollTrigger: {
-                trigger: "#exclusive",
-                start: "top 70%"
-            },
-            duration: 1.2,
-            scale: 0.8,
-            opacity: 0,
-            ease: "elastic.out(1, 0.8)"
-        });
-        
-        // Navbar Animation on Scroll
-        ScrollTrigger.create({
-            start: "top -100",
-            onUpdate: (self) => {
-                if (self.direction === 1) {
-                    gsap.to("#navbar", { y: -100, duration: 0.3 });
-                } else {
-                    gsap.to("#navbar", { y: 0, duration: 0.3 });
-                }
+                drops[i]++;
             }
-        });
-        
-        // Create Particles
+        }
+
+        setInterval(drawCodeRain, 50);
+
+        // Create Floating Particles
         function createParticles() {
             const container = document.getElementById('particles');
-            const colors = ['#00d9ff', '#7c3aed', '#f472b6', '#fbbf24'];
-            
             for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                particle.style.width = Math.random() * 6 + 2 + 'px';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                particle.style.background = Math.random() > 0.5 ? '#22d3ee' : '#9333ea';
+                particle.style.width = (2 + Math.random() * 4) + 'px';
                 particle.style.height = particle.style.width;
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.opacity = Math.random() * 0.5 + 0.2;
                 container.appendChild(particle);
-                
-                gsap.to(particle, {
-                    x: "random(-100, 100)",
-                    y: "random(-100, 100)",
-                    duration: "random(10, 20)",
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut"
-                });
             }
         }
-        
+
         createParticles();
-        
-        // Code Rain Effect
-        function createCodeRain() {
-            const container = document.getElementById('codeRain');
-            const chars = '01アイウエオカキクケコ{}[]<>/*';
-            
-            for (let i = 0; i < 30; i++) {
-                const char = document.createElement('div');
-                char.className = 'code-char';
-                char.textContent = chars[Math.floor(Math.random() * chars.length)];
-                char.style.left = Math.random() * 100 + '%';
-                char.style.animationDuration = Math.random() * 10 + 10 + 's';
-                char.style.animationDelay = Math.random() * 10 + 's';
-                container.appendChild(char);
-            }
-        }
-        
-        createCodeRain();
-        
-        // Mouse Move Parallax
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Mouse interaction - Glow effect follows cursor
         document.addEventListener('mousemove', (e) => {
-            const shapes = document.querySelectorAll('.hero-shape');
-            const mouseX = e.clientX / window.innerWidth - 0.5;
-            const mouseY = e.clientY / window.innerHeight - 0.5;
+            const glow = document.createElement('div');
+            glow.style.cssText = `
+                position: fixed;
+                left: ${e.clientX}px;
+                top: ${e.clientY}px;
+                width: 20px;
+                height: 20px;
+                background: radial-gradient(circle, rgba(34, 211, 238, 0.5), transparent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 100;
+                animation: glowFade 1s forwards;
+            `;
+            document.body.appendChild(glow);
+            setTimeout(() => glow.remove(), 1000);
+        });
+
+        // Add glow fade animation dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes glowFade {
+                0% { transform: scale(1); opacity: 1; }
+                100% { transform: scale(3); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Audio visualization simulation (visual only)
+        function createAudioBars() {
+            const barsContainer = document.createElement('div');
+            barsContainer.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 3px;
+                z-index: 50;
+            `;
             
-            shapes.forEach((shape, i) => {
-                const speed = (i + 1) * 20;
-                gsap.to(shape, {
-                    x: mouseX * speed,
-                    y: mouseY * speed,
-                    duration: 0.5
-                });
-            });
-        });
+            for (let i = 0; i < 20; i++) {
+                const bar = document.createElement('div');
+                bar.style.cssText = `
+                    width: 4px;
+                    height: ${10 + Math.random() * 30}px;
+                    background: linear-gradient(to top, #22d3ee, #9333ea);
+                    border-radius: 2px;
+                    animation: audioBar ${0.3 + Math.random() * 0.5}s ease-in-out infinite alternate;
+                    animation-delay: ${i * 0.05}s;
+                `;
+                barsContainer.appendChild(bar);
+            }
+            
+            document.body.appendChild(barsContainer);
+        }
+
+        const audioStyle = document.createElement('style');
+        audioStyle.textContent = `
+            @keyframes audioBar {
+                0% { transform: scaleY(0.3); }
+                100% { transform: scaleY(1); }
+            }
+        `;
+        document.head.appendChild(audioStyle);
         
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    gsap.to(window, {
-                        duration: 1,
-                        scrollTo: target,
-                        ease: "power3.inOut"
-                    });
-                }
-            });
-        });
+        createAudioBars();
     </script>
 </body>
 </html>
